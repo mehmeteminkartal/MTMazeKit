@@ -45,4 +45,8 @@ public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
 	
 	public var x: Int
 	public var y: Int
+	
+	func nextTile(at direction: MTDirection) -> MTTilePosition {
+		return self + direction.diff
+	}
 }

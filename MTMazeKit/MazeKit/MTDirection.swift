@@ -8,12 +8,18 @@
 
 import Foundation
 
-public typealias MTRobotDirections = [MTRobotDirection]
+public typealias MTDirections = [MTDirection]
 
-extension Array where Element == MTRobotDirection {
+public enum MTTurnDirection {
+	case left
+	case right
+	case back
+}
+
+extension Array where Element == MTDirection {
 	public var directionsAsString: String {
 		var l = ""
-		for i in MTRobotDirection.allDirections {
+		for i in MTDirection.allDirections {
 			if self.contains(i) {
 				l += "\(i.char)"
 			}
@@ -22,7 +28,7 @@ extension Array where Element == MTRobotDirection {
 	}
 }
 
-@objc public enum MTRobotDirection: Int, Codable, CustomStringConvertible {
+@objc public enum MTDirection: Int, Codable, CustomStringConvertible {
 	public var description: String {
 		return "\(self.char)"
 	}
@@ -32,7 +38,20 @@ extension Array where Element == MTRobotDirection {
 	case right = 4
 	case left = 8
 	
-	public func moveLeft() -> MTRobotDirection {
+	
+	public func turn(_ turnDirection: MTTurnDirection) -> MTDirection {
+		switch turnDirection {
+			
+		case .left:
+			return self.moveLeft()
+		case .right:
+			return self.moveRight()
+		case .back:
+			return self.opposite
+		}
+	}
+	
+	private func moveLeft() -> MTDirection {
 		switch self {
 		case .up:
 			return .left
@@ -45,7 +64,7 @@ extension Array where Element == MTRobotDirection {
 		}
 	}
 	
-	public func moveRight() -> MTRobotDirection {
+	private func moveRight() -> MTDirection {
 		switch self {
 		case .up:
 			return .right
@@ -58,11 +77,11 @@ extension Array where Element == MTRobotDirection {
 		}
 	}
 	
-	public static var allDirections:[MTRobotDirection] {
-		return [MTRobotDirection.up, MTRobotDirection.down, MTRobotDirection.right, MTRobotDirection.left]
+	public static var allDirections:[MTDirection] {
+		return [MTDirection.up, MTDirection.down, MTDirection.right, MTDirection.left]
 	}
 	
-	public var opposite:MTRobotDirection {
+	public var opposite:MTDirection {
 		switch self {
 		case .up:
 			return .down

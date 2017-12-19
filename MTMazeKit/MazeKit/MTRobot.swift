@@ -60,12 +60,6 @@ open class MTRobot: NSObject {
 		self.score = 10000
 	}
 	
-	public enum turnDirection {
-		case left
-		case right
-		case back
-	}
-	
 	open var canRotate: Bool {
 		return true
 	}
@@ -75,7 +69,7 @@ open class MTRobot: NSObject {
 	}
 	
 	public var robotPos: MTTilePosition = .init(x: 0, y: 0)
-	public var robotDirection: MTRobotDirection = .down
+	public var robotDirection: MTDirection = .down
 	
 	public weak var maze: MTMaze!
 	
@@ -85,8 +79,8 @@ open class MTRobot: NSObject {
 	}
 	
 	private func clearCache() {
-		let column = [Int](repeating: 0, count: self.maze.mazeSize.y)
-		self.mazeCache = [[Int]](repeating: column, count: self.maze.mazeSize.x)
+		let column = [Int](repeating: 0, count: self.maze.size.y)
+		self.mazeCache = [[Int]](repeating: column, count: self.maze.size.x)
 	}
 	
 	public var status: MTRobotStatus = .stopped
@@ -100,7 +94,7 @@ open class MTRobot: NSObject {
 			return -1
 		}
 		
-		if self.maze.mazeSize.inBounds(tile: path) {
+		if self.maze.size.inBounds(tile: path) {
 			return mazeCache[path.x][path.y]
 		} else {
 			return -1
@@ -115,12 +109,12 @@ open class MTRobot: NSObject {
 		
 		let directions = self.getDirections()
 		
-		if directions.contains(self.robotDirection.moveLeft()) {
+		if directions.contains(self.robotDirection.turn(.left)) {
 			turn(.left)
 			forward()
 		} else if directions.contains(self.robotDirection) {
 			forward()
-		} else if directions.contains(self.robotDirection.moveRight()) {
+		} else if directions.contains(self.robotDirection.turn(.right)) {
 			turn(.right)
 			forward()
 		} else  {
@@ -137,14 +131,14 @@ open class MTRobot: NSObject {
 		
 		runAlgo();
 		
-		if(self.robotPos == MTTilePosition(x: self.maze.mazeSize.x - 1,y: self.maze.mazeSize.y - 1)) {
+		if(self.robotPos == MTTilePosition(x: self.maze.size.x - 1,y: self.maze.size.y - 1)) {
 			self.status = .finished
 			//NotificationCenter.default.post(name: .MTMazeNewMazeNotification, object: nil)
 		}
 	}
 	
 	
-	public func turn(_ direction: turnDirection) {
+	public func turn(_ direction: MTTurnDirection) {
 		if score < 5 {
 			self.status = .exhausted
 			return
@@ -152,21 +146,15 @@ open class MTRobot: NSObject {
 		
 		numberOfTurns += 1
 		self.score -= 5
-		switch direction {
-		case .back:
-			self.robotDirection = self.robotDirection.opposite
-		case .left:
-			self.robotDirection = self.robotDirection.moveLeft()
-		case .right:
-			self.robotDirection = self.robotDirection.moveRight()
-		}
+		
+		self.robotDirection = self.robotDirection.turn(direction)
 		
 		let val = self.getCachedValue(for: self.robotPos)
 		self.setCachedValue(for: self.robotPos, to: val + 1)
 		
 	}
 	
-	func getDirections() -> MTRobotDirections {
+	func getDirections() -> MTDirections {
 		return self.maze.directions(at: self.robotPos);
 	}
 	
@@ -180,7 +168,7 @@ open class MTRobot: NSObject {
 		self.score -= 10
 		
 		if self.getDirections().contains(self.robotDirection) {
-			if(self.maze.mazeSize.inBounds(tile: self.robotPos + self.robotDirection.diff)) {
+			if(self.maze.size.inBounds(tile: self.robotPos + self.robotDirection.diff)) {
 				self.robotPos += self.robotDirection.diff
 				
 				let val = self.getCachedValue(for: self.robotPos)

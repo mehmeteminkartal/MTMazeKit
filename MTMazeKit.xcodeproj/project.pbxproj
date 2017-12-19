@@ -7,39 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D1F3C6C81FE995D50059E284 /* MTMazeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F3C6BE1FE995D40059E284 /* MTMazeKit.framework */; };
-		D1F3C6CD1FE995D50059E284 /* MTMazeKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6CC1FE995D50059E284 /* MTMazeKitTests.swift */; };
 		D1F3C6CF1FE995D50059E284 /* MTMazeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D1F3C6C11FE995D40059E284 /* MTMazeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1F3C6D91FE996E30059E284 /* MTTilePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6D81FE996E30059E284 /* MTTilePosition.swift */; };
 		D1F3C6DB1FE9972D0059E284 /* MTMazeSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6DA1FE9972D0059E284 /* MTMazeSize.swift */; };
 		D1F3C6DD1FE9976A0059E284 /* MTMaze.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6DC1FE9976A0059E284 /* MTMaze.swift */; };
-		D1F3C6DF1FE9978F0059E284 /* MTRobotDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6DE1FE9978F0059E284 /* MTRobotDirection.swift */; };
+		D1F3C6DF1FE9978F0059E284 /* MTDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6DE1FE9978F0059E284 /* MTDirection.swift */; };
 		D1F3C6E11FE997B10059E284 /* MTMazeSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6E01FE997B10059E284 /* MTMazeSolver.swift */; };
 		D1F3C6E31FE99A190059E284 /* MTRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6E21FE99A190059E284 /* MTRobot.swift */; };
 		D1F3C6E61FE99C5E0059E284 /* MTMazeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6E51FE99C5E0059E284 /* MTMazeGenerator.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D1F3C6C91FE995D50059E284 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D1F3C6B51FE995D40059E284 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D1F3C6BD1FE995D40059E284;
-			remoteInfo = MTMazeKit;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		D1F3C6BE1FE995D40059E284 /* MTMazeKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MTMazeKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1F3C6C11FE995D40059E284 /* MTMazeKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMazeKit.h; sourceTree = "<group>"; };
 		D1F3C6C21FE995D40059E284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D1F3C6C71FE995D50059E284 /* MTMazeKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTMazeKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1F3C6CC1FE995D50059E284 /* MTMazeKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTMazeKitTests.swift; sourceTree = "<group>"; };
-		D1F3C6CE1FE995D50059E284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1F3C6D81FE996E30059E284 /* MTTilePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTTilePosition.swift; sourceTree = "<group>"; };
 		D1F3C6DA1FE9972D0059E284 /* MTMazeSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTMazeSize.swift; sourceTree = "<group>"; };
 		D1F3C6DC1FE9976A0059E284 /* MTMaze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTMaze.swift; sourceTree = "<group>"; };
-		D1F3C6DE1FE9978F0059E284 /* MTRobotDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTRobotDirection.swift; sourceTree = "<group>"; };
+		D1F3C6DE1FE9978F0059E284 /* MTDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTDirection.swift; sourceTree = "<group>"; };
 		D1F3C6E01FE997B10059E284 /* MTMazeSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTMazeSolver.swift; sourceTree = "<group>"; };
 		D1F3C6E21FE99A190059E284 /* MTRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTRobot.swift; sourceTree = "<group>"; };
 		D1F3C6E51FE99C5E0059E284 /* MTMazeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTMazeGenerator.swift; sourceTree = "<group>"; };
@@ -53,23 +38,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D1F3C6C41FE995D50059E284 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D1F3C6C81FE995D50059E284 /* MTMazeKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		D1F3C6B41FE995D40059E284 = {
 			isa = PBXGroup;
 			children = (
-				D1F3C6E41FE99A5A0059E284 /* MazeKit */,
 				D1F3C6C01FE995D40059E284 /* MTMazeKit */,
-				D1F3C6CB1FE995D50059E284 /* MTMazeKitTests */,
 				D1F3C6BF1FE995D40059E284 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				D1F3C6BE1FE995D40059E284 /* MTMazeKit.framework */,
-				D1F3C6C71FE995D50059E284 /* MTMazeKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,19 +60,11 @@
 		D1F3C6C01FE995D40059E284 /* MTMazeKit */ = {
 			isa = PBXGroup;
 			children = (
+				D1F3C6E41FE99A5A0059E284 /* MazeKit */,
 				D1F3C6C11FE995D40059E284 /* MTMazeKit.h */,
 				D1F3C6C21FE995D40059E284 /* Info.plist */,
 			);
 			path = MTMazeKit;
-			sourceTree = "<group>";
-		};
-		D1F3C6CB1FE995D50059E284 /* MTMazeKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				D1F3C6CC1FE995D50059E284 /* MTMazeKitTests.swift */,
-				D1F3C6CE1FE995D50059E284 /* Info.plist */,
-			);
-			path = MTMazeKitTests;
 			sourceTree = "<group>";
 		};
 		D1F3C6E41FE99A5A0059E284 /* MazeKit */ = {
@@ -107,7 +73,7 @@
 				D1F3C6D81FE996E30059E284 /* MTTilePosition.swift */,
 				D1F3C6DA1FE9972D0059E284 /* MTMazeSize.swift */,
 				D1F3C6DC1FE9976A0059E284 /* MTMaze.swift */,
-				D1F3C6DE1FE9978F0059E284 /* MTRobotDirection.swift */,
+				D1F3C6DE1FE9978F0059E284 /* MTDirection.swift */,
 				D1F3C6E01FE997B10059E284 /* MTMazeSolver.swift */,
 				D1F3C6E21FE99A190059E284 /* MTRobot.swift */,
 				D1F3C6E51FE99C5E0059E284 /* MTMazeGenerator.swift */,
@@ -147,24 +113,6 @@
 			productReference = D1F3C6BE1FE995D40059E284 /* MTMazeKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D1F3C6C61FE995D50059E284 /* MTMazeKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D1F3C6D51FE995D50059E284 /* Build configuration list for PBXNativeTarget "MTMazeKitTests" */;
-			buildPhases = (
-				D1F3C6C31FE995D50059E284 /* Sources */,
-				D1F3C6C41FE995D50059E284 /* Frameworks */,
-				D1F3C6C51FE995D50059E284 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D1F3C6CA1FE995D50059E284 /* PBXTargetDependency */,
-			);
-			name = MTMazeKitTests;
-			productName = MTMazeKitTests;
-			productReference = D1F3C6C71FE995D50059E284 /* MTMazeKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -178,10 +126,6 @@
 					D1F3C6BD1FE995D40059E284 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Automatic;
-					};
-					D1F3C6C61FE995D50059E284 = {
-						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -199,20 +143,12 @@
 			projectRoot = "";
 			targets = (
 				D1F3C6BD1FE995D40059E284 /* MTMazeKit */,
-				D1F3C6C61FE995D50059E284 /* MTMazeKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D1F3C6BC1FE995D40059E284 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D1F3C6C51FE995D50059E284 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -227,7 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1F3C6DD1FE9976A0059E284 /* MTMaze.swift in Sources */,
-				D1F3C6DF1FE9978F0059E284 /* MTRobotDirection.swift in Sources */,
+				D1F3C6DF1FE9978F0059E284 /* MTDirection.swift in Sources */,
 				D1F3C6DB1FE9972D0059E284 /* MTMazeSize.swift in Sources */,
 				D1F3C6E31FE99A190059E284 /* MTRobot.swift in Sources */,
 				D1F3C6D91FE996E30059E284 /* MTTilePosition.swift in Sources */,
@@ -236,23 +172,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D1F3C6C31FE995D50059E284 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D1F3C6CD1FE995D50059E284 /* MTMazeKitTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D1F3C6CA1FE995D50059E284 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D1F3C6BD1FE995D40059E284 /* MTMazeKit */;
-			targetProxy = D1F3C6C91FE995D50059E284 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D1F3C6D01FE995D50059E284 /* Debug */ = {
@@ -415,36 +335,6 @@
 			};
 			name = Release;
 		};
-		D1F3C6D61FE995D50059E284 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8XR5BFJ8PC;
-				INFOPLIST_FILE = MTMazeKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mekatrotekno.MTMazeKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		D1F3C6D71FE995D50059E284 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8XR5BFJ8PC;
-				INFOPLIST_FILE = MTMazeKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mekatrotekno.MTMazeKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -462,15 +352,6 @@
 			buildConfigurations = (
 				D1F3C6D31FE995D50059E284 /* Debug */,
 				D1F3C6D41FE995D50059E284 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D1F3C6D51FE995D50059E284 /* Build configuration list for PBXNativeTarget "MTMazeKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D1F3C6D61FE995D50059E284 /* Debug */,
-				D1F3C6D71FE995D50059E284 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

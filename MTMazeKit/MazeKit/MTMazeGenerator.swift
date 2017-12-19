@@ -26,19 +26,19 @@ extension Array {
 }
 
 public class MTMazeGenerator {
-	let x:Int
-	let y:Int
+	
+	var size: MTMazeSize
 	var maze:[[Int]]
 	var cellWidth = 24;
 	var randomSource: GKARC4RandomSource
 	
 	var seed: String?
 	
-	public init(_ x:Int, _ y:Int, seed: String) {
-		self.x  = x
-		self.y = y
-		let column = [Int](repeating: 0, count: y)
-		self.maze = [[Int]](repeating: column, count: x)
+	public init(size: MTMazeSize, seed: String) {
+		self.size = size
+		
+		let column = [Int](repeating: 0, count: size.y)
+		self.maze = [[Int]](repeating: column, count: size.x)
 		
 		self.seed = seed
 		self.randomSource = GKARC4RandomSource(seed: seed.data(using: .utf8)!)
@@ -47,7 +47,7 @@ public class MTMazeGenerator {
 	}
 	
 	private func generateMaze(_ cx:Int, _ cy:Int) {
-		var directions = MTRobotDirection.allDirections
+		var directions = MTDirection.allDirections
 		
 		directions.shuffle(self.randomSource)
 		
@@ -63,14 +63,10 @@ public class MTMazeGenerator {
 		}
 	}
 	
-	var size: MTMazeSize {
-		return MTMazeSize(x: self.x, y: self.y)
-	}
-	
 	public func getMaze() -> MTMaze {
 		let maze = MTMaze(with: size);
-		for j in 0..<y {
-			for i in 0..<x {
+		for j in 0..<size.y {
+			for i in 0..<size.x {
 				let position = MTTilePosition(x: i, y: j)
 				let direction = directions(at: position)
 				maze.set(tile: position, to: direction)
@@ -81,10 +77,10 @@ public class MTMazeGenerator {
 		return maze
 	}
 	
-	func directions(at position: MTTilePosition) -> MTRobotDirections {
-		var directions: MTRobotDirections = []
+	func directions(at position: MTTilePosition) -> MTDirections {
+		var directions: MTDirections = []
 		let value = self.maze[position.x][position.y];
-		for direction in MTRobotDirection.allDirections {
+		for direction in MTDirection.allDirections {
 			if (value & direction.rawValue) != 0 {
 				directions.append(direction)
 			}

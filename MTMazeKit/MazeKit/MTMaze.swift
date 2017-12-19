@@ -11,8 +11,8 @@ import Foundation
 
 public class MTMaze: NSObject, Codable {
 	
-	public var mazeSize: MTMazeSize
-	public var mazeBlocks: [[MTRobotDirections]]
+	public var size: MTMazeSize
+	public var mazeBlocks: [[MTDirections]]
 	
 	public var mazeSeed: String?
 	
@@ -20,15 +20,15 @@ public class MTMaze: NSObject, Codable {
 	public var endPoint: MTTilePosition
 	
 	public init(with size: MTMazeSize) {
-		self.mazeSize = size
+		self.size = size
 		
-		let column = [MTRobotDirections](repeating: MTRobotDirection.allDirections, count: self.mazeSize.y)
-		self.mazeBlocks = [[MTRobotDirections]](repeating: column, count: self.mazeSize.x)
+		let column = [MTDirections](repeating: MTDirection.allDirections, count: self.size.y)
+		self.mazeBlocks = [[MTDirections]](repeating: column, count: self.size.x)
 		
-		for x in 0..<self.mazeSize.x {
-			for y in 0..<self.mazeSize.y {
+		for x in 0..<self.size.x {
+			for y in 0..<self.size.y {
 				
-				var directions: MTRobotDirections = MTRobotDirection.allDirections
+				var directions: MTDirections = MTDirection.allDirections
 				
 				if x == 0 {
 					if let i = directions.index(of: .left) {
@@ -42,13 +42,13 @@ public class MTMaze: NSObject, Codable {
 					}
 				}
 				
-				if x == self.mazeSize.x - 1 {
+				if x == self.size.x - 1 {
 					if let i = directions.index(of: .right) {
 						directions.remove(at: i)
 					}
 				}
 				
-				if y == self.mazeSize.y - 1 {
+				if y == self.size.y - 1 {
 					if let i = directions.index(of: .down) {
 						directions.remove(at: i)
 					}
@@ -63,7 +63,7 @@ public class MTMaze: NSObject, Codable {
 		super.init()
 	}
 	
-	public func set(tile point: MTTilePosition, to direction: MTRobotDirections) {
+	public func set(tile point: MTTilePosition, to direction: MTDirections) {
 		self.mazeBlocks[point.x][point.y] = direction
 	}
 	
@@ -71,16 +71,16 @@ public class MTMaze: NSObject, Codable {
 		return "Maze View"
 	}
 	
-	public func directions(at: MTTilePosition) -> MTRobotDirections {
+	public func directions(at: MTTilePosition) -> MTDirections {
 		return  self.mazeBlocks[at.x][at.y];
 	}
 	
 	public func display() {
 		let cellWidth = 3
-		for j in 0..<self.mazeSize.y {
+		for j in 0..<self.size.y {
 			// Draw top edge
 			var topEdge = ""
-			for i in 0..<self.mazeSize.x {
+			for i in 0..<self.size.x {
 				topEdge += "+"
 				topEdge += String(repeating: !self.mazeBlocks[i][j].contains(.up) ? "-" : " ", count: cellWidth)
 			}
@@ -89,7 +89,7 @@ public class MTMaze: NSObject, Codable {
 			
 			// Draw left edge
 			var leftEdge = ""
-			for i in 0..<self.mazeSize.x {
+			for i in 0..<self.size.x {
 				leftEdge += !self.mazeBlocks[i][j].contains(.left) ? "|" : " "
 				leftEdge += String(repeating: " ", count: cellWidth)
 			}
@@ -99,7 +99,7 @@ public class MTMaze: NSObject, Codable {
 		
 		// Draw bottom edge
 		var bottomEdge = ""
-		for _ in 0..<self.mazeSize.x {
+		for _ in 0..<self.size.x {
 			bottomEdge += "+"
 			bottomEdge += String(repeating: "-", count: cellWidth)
 		}

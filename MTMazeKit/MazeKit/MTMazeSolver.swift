@@ -18,14 +18,14 @@ public class MTMazeSolver: NSObject {
 		self.maze = maze
 		
 		
-		let cols = [Int].init(repeating: 0, count: self.maze.mazeSize.y)
-		mazeMap = [[Int]].init(repeating: cols, count: self.maze.mazeSize.x)
+		let cols = [Int].init(repeating: 0, count: self.maze.size.y)
+		mazeMap = [[Int]].init(repeating: cols, count: self.maze.size.x)
 		
 	}
 	
-	var steps: [MTRobotDirection?] = []
+	var steps: [MTDirection?] = []
 	
-	public func solve(from: MTTilePosition, to: MTTilePosition) -> MTRobotDirections {
+	public func solve(from: MTTilePosition, to: MTTilePosition) -> MTDirections {
 		
 		recStart(from, 0, nil)
 		
@@ -37,14 +37,14 @@ public class MTMazeSolver: NSObject {
 			let directions = maze.directions(at: pos)
 			for dir in directions {
 				let newPos = pos + dir.diff;
-				if self.maze.mazeSize.inBounds(tile: newPos) && self.mazeMap[newPos.x][newPos.y] == (i - 1) {
+				if self.maze.size.inBounds(tile: newPos) && self.mazeMap[newPos.x][newPos.y] == (i - 1) {
 					self.steps[i - 1] = dir.opposite
 					pos += dir.diff
 				}
 			}
 		}
 		
-		var steps: MTRobotDirections = [];
+		var steps: MTDirections = [];
 		for s in self.steps {
 			if let a = s {
 				steps.append(a)
@@ -54,9 +54,9 @@ public class MTMazeSolver: NSObject {
 	}
 	
 	var maxSteps = 0;
-	private func recStart(_ pos: MTTilePosition, _ val: Int, _ opposite: MTRobotDirection? ) {
+	private func recStart(_ pos: MTTilePosition, _ val: Int, _ opposite: MTDirection? ) {
 		
-		if self.maze.mazeSize.inBounds(tile: pos) {
+		if self.maze.size.inBounds(tile: pos) {
 			self.mazeMap[pos.x][pos.y] = val
 			
 			if pos == self.maze.endPoint {
@@ -69,7 +69,7 @@ public class MTMazeSolver: NSObject {
 				if opposite != dir {
 					
 					let newPos = pos + dir.diff;
-					if self.maze.mazeSize.inBounds(tile: newPos) && self.mazeMap[newPos.x][newPos.y] == 0 {
+					if self.maze.size.inBounds(tile: newPos) && self.mazeMap[newPos.x][newPos.y] == 0 {
 						recStart(newPos, val + 1, dir.opposite)
 					}
 				}
