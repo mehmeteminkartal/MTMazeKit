@@ -9,11 +9,17 @@
 
 import Foundation
 
+/// Tile Position class for maze
 public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
 	public var description: String {
 		return "(x: \(x), y: \(y))"
 	}
 	
+	/// Initialise Tile Position
+	///
+	/// - Parameters:
+	///   - x: X Coordinate for given tile with top left coordinate space
+	///   - y: Y Coordinate for given tile with top left coordinate space
 	public init(x: Int, y: Int) {
 		self.x = x
 		self.y = y
@@ -46,6 +52,10 @@ public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
 	public var x: Int
 	public var y: Int
 	
+	/// Returns the next tile at the direction
+	///
+	/// - Parameter direction: Direction can be .left, .right or .back
+	/// - Returns: Tile Position
 	func nextTile(at direction: MTDirection) -> MTTilePosition {
 		return self + direction.diff
 	}
