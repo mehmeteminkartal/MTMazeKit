@@ -26,42 +26,30 @@
 
 import UIKit
 
-public protocol MTMazeViewDelegate {
+public protocol MTBlockMazeViewDelegate {
 	
 	/// Called when maze stats are updated
 	///
 	/// - Parameters:
 	///   - mazeView: Maze Object
 	///   - didUpdateStats: Stat text multiline
-	func mazeView(_ mazeView: MTMazeView, didUpdateStats string: String)
+	func mazeView(_ mazeView: MTBlockMazeView, didUpdateStats string: String)
 }
 
 
-open class MTRobotView: UIImageView {
-	public var robot: MTRobot
-	
-	public init(robot: MTRobot) {
-		self.robot = robot
-		super.init(image: UIImage(named: self.robot.robotIconName))
-	}
-	
-	required public init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-}
 
-open class MTMazeView: UIView {
+open class MTBlockMazeView: UIView {
 	
 	
-	public var delegate: MTMazeViewDelegate?
+	public var delegate: MTBlockMazeViewDelegate?
 	
 	public var isRunning = false;
 	
 	public var robots: [MTRobot] = []
 	public var robotViews: [MTRobotView] = []
-	public var maze: MTMaze?
+	public var maze: MTBlockMaze?
 	public var isDummy = false
-	public var mazeBlocks: [[UIImageView]] = []
+	public var mazeBlocks: [[UIView]] = []
 	
 	
 	public override init(frame: CGRect) {
@@ -75,7 +63,7 @@ open class MTMazeView: UIView {
 	}
 	
 	public func emptyMaze() {
-		let maze = MTMaze(with: MTMazeSize(x: 5, y: 5))
+		let maze = MTBlockMaze(with: MTMazeSize(x: 5, y: 5))
 		self.setMaze(to: maze)
 	}
 	
@@ -85,9 +73,9 @@ open class MTMazeView: UIView {
 		self.robots.append(robot)
 		robotViews.append(robotView)
 		if !isDummy {
-			if let maze = self.maze {
-				robot.mazeUpdated(to: maze)
-			}
+//			if let maze = self.maze {
+//				robot.mazeUpdated(to: maze)
+//			}
 		}
 		self.addSubview(robotView)
 		robotView.layer.zPosition = 1000
@@ -140,7 +128,7 @@ open class MTMazeView: UIView {
 		updateStats()
 	}
 	
-	public func setMaze(to maze: MTMaze) {
+	public func setMaze(to maze: MTBlockMaze) {
 		self.maze = maze
 		
 		
@@ -152,25 +140,37 @@ open class MTMazeView: UIView {
 		mazeBlocks.removeAll()
 		
 		for j in 0..<maze.size.y {
-			var rows: [UIImageView] = []
+			var rows: [UIView] = []
 			
 			for i in 0..<maze.size.x {
-				let d = maze.directions(at: MTTilePosition(x: i, y: j)).directionsAsString
+				let d = maze.directions(at: MTTilePosition(x: i, y: j))
 				
-				if let image = UIImage(named: d, in: Bundle(identifier: "com.mekatrotekno.MTMazeKit"), compatibleWith: nil) {
-					let imageView = UIImageView(image: image);
+				let view = UIView()
+				
+				switch d {
 					
-					self.addSubview(imageView);
-					//imageView.frame = getPosition(i, j);
-					rows.append(imageView)
+				case .empty:
+					view.backgroundColor = .white
+				case .obstacle(let a):
+					let t = UITextView()
+					t.text = "\(a)"
+					view.addSubview(t)
+					view.backgroundColor = .gray
+					
+				case .wall:
+					view.backgroundColor = .black
 				}
+				
+				self.addSubview(view);
+				//imageView.frame = getPosition(i, j);
+				rows.append(view)
 			}
 			self.mazeBlocks.append(rows)
 		}
 		if !isDummy {
 			for robot in robots {
 				robot.robotPos = maze.startPoint
-				robot.mazeUpdated(to: maze)
+//				robot.mazeUpdated(to: maze)
 			}
 		}
 		updateStats();
@@ -248,4 +248,5 @@ open class MTMazeView: UIView {
 	}
 	
 }
+
 

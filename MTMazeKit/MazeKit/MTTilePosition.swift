@@ -27,6 +27,7 @@
 
 
 import Foundation
+import GameKit
 
 /// Tile Position class for maze
 public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
@@ -77,5 +78,9 @@ public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
 	/// - Returns: Tile Position
 	func nextTile(at direction: MTDirection) -> MTTilePosition {
 		return self + direction.diff
+	}
+	
+	public var int2: vector_int2 {
+		return vector_int2(Int32(x), Int32(y))
 	}
 }

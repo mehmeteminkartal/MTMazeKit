@@ -27,6 +27,11 @@
 
 import Foundation
 
+public extension Notification.Name {
+	static var MTMazeNewMazeNotification: NSNotification.Name {
+		return NSNotification.Name("com.mekatrotekno.mazesolver.newmaze")
+	}
+}
 
 @objc public enum MTRobotStatus: Int, CustomStringConvertible {
 	case stopped = 0
@@ -152,7 +157,8 @@ open class MTRobot: NSObject {
 		
 		if(self.robotPos == MTTilePosition(x: self.maze.size.x - 1,y: self.maze.size.y - 1)) {
 			self.status = .finished
-			//NotificationCenter.default.post(name: .MTMazeNewMazeNotification, object: nil)
+			
+			NotificationCenter.default.post(name: .MTMazeNewMazeNotification, object: nil)
 		}
 	}
 	
@@ -177,6 +183,20 @@ open class MTRobot: NSObject {
 		return self.maze.directions(at: self.robotPos);
 	}
 	
+	var canGoForward: Bool {
+		if self.getDirections().contains(self.robotDirection) {
+			let np = self.robotPos.nextTile(at: self.robotDirection)
+			
+			if self.maze.size.inBounds(tile: np) {
+				return true
+			} else {
+				return false
+			}
+		} else {
+			return false;
+		}
+	}
+	
 	public func forward() {
 		if score < 10 {
 			self.status = .exhausted
@@ -186,17 +206,12 @@ open class MTRobot: NSObject {
 		self.numberOfMoves += 1
 		self.score -= 10
 		
-		if self.getDirections().contains(self.robotDirection) {
-			if(self.maze.size.inBounds(tile: self.robotPos + self.robotDirection.diff)) {
-				self.robotPos += self.robotDirection.diff
-				
-				let val = self.getCachedValue(for: self.robotPos)
-				self.setCachedValue(for: self.robotPos, to: val + 1)
-				
-			} else {
-				print("illegal move!");
-				self.status = .disqualified
-			}
+		if self.canGoForward {
+			self.robotPos += self.robotDirection.diff
+			
+			let val = self.getCachedValue(for: self.robotPos)
+			self.setCachedValue(for: self.robotPos, to: val + 1)
+			
 		} else {
 			print("illegal move!");
 			self.status = .disqualified

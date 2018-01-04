@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D11ECD141FEFA616002011DF /* MTBlockMazeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11ECD131FEFA616002011DF /* MTBlockMazeView.swift */; };
+		D11ECD161FEFA642002011DF /* MTBlockMaze.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11ECD151FEFA642002011DF /* MTBlockMaze.swift */; };
 		D1769AF81FEE873300A2D6B0 /* MTMazeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1769AF71FEE873300A2D6B0 /* MTMazeView.swift */; };
+		D188B23D1FFDEEAE00B00E39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D188B23C1FFDEEAE00B00E39 /* Assets.xcassets */; };
 		D1F3C6CF1FE995D50059E284 /* MTMazeKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D1F3C6C11FE995D40059E284 /* MTMazeKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1F3C6D91FE996E30059E284 /* MTTilePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6D81FE996E30059E284 /* MTTilePosition.swift */; };
 		D1F3C6DB1FE9972D0059E284 /* MTMazeSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F3C6DA1FE9972D0059E284 /* MTMazeSize.swift */; };
@@ -19,7 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D11ECD131FEFA616002011DF /* MTBlockMazeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTBlockMazeView.swift; sourceTree = "<group>"; };
+		D11ECD151FEFA642002011DF /* MTBlockMaze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTBlockMaze.swift; sourceTree = "<group>"; };
 		D1769AF71FEE873300A2D6B0 /* MTMazeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTMazeView.swift; sourceTree = "<group>"; };
+		D188B23C1FFDEEAE00B00E39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D1F3C6BE1FE995D40059E284 /* MTMazeKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MTMazeKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1F3C6C11FE995D40059E284 /* MTMazeKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MTMazeKit.h; sourceTree = "<group>"; };
 		D1F3C6C21FE995D40059E284 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -46,6 +52,7 @@
 		D1F3C6B41FE995D40059E284 = {
 			isa = PBXGroup;
 			children = (
+				D188B23C1FFDEEAE00B00E39 /* Assets.xcassets */,
 				D1F3C6C01FE995D40059E284 /* MTMazeKit */,
 				D1F3C6BF1FE995D40059E284 /* Products */,
 			);
@@ -80,6 +87,8 @@
 				D1F3C6E21FE99A190059E284 /* MTRobot.swift */,
 				D1F3C6E51FE99C5E0059E284 /* MTMazeGenerator.swift */,
 				D1769AF71FEE873300A2D6B0 /* MTMazeView.swift */,
+				D11ECD131FEFA616002011DF /* MTBlockMazeView.swift */,
+				D11ECD151FEFA642002011DF /* MTBlockMaze.swift */,
 			);
 			path = MazeKit;
 			sourceTree = "<group>";
@@ -155,6 +164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D188B23D1FFDEEAE00B00E39 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +178,9 @@
 				D1F3C6DD1FE9976A0059E284 /* MTMaze.swift in Sources */,
 				D1F3C6DF1FE9978F0059E284 /* MTDirection.swift in Sources */,
 				D1F3C6DB1FE9972D0059E284 /* MTMazeSize.swift in Sources */,
+				D11ECD161FEFA642002011DF /* MTBlockMaze.swift in Sources */,
 				D1F3C6E31FE99A190059E284 /* MTRobot.swift in Sources */,
+				D11ECD141FEFA616002011DF /* MTBlockMazeView.swift in Sources */,
 				D1769AF81FEE873300A2D6B0 /* MTMazeView.swift in Sources */,
 				D1F3C6D91FE996E30059E284 /* MTTilePosition.swift in Sources */,
 				D1F3C6E11FE997B10059E284 /* MTMazeSolver.swift in Sources */,
