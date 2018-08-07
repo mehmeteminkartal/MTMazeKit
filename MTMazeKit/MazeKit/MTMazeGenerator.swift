@@ -71,9 +71,8 @@ public class MTMazeGenerator {
 		directions.shuffle(self.randomSource)
 		
 		for direction in directions {
-			let (dx, dy) = direction.diff
-			let nx = cx + dx
-			let ny = cy + dy
+			let nx = cx + direction.diff.x
+			let ny = cy + direction.diff.y
 			if size.inBounds(x: nx, y: ny) && maze[nx][ny] == 0 {
 				maze[cx][cy] |= direction.rawValue
 				maze[nx][ny] |= direction.opposite.rawValue

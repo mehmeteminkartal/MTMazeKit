@@ -43,6 +43,7 @@ open class MTRobotView: UIImageView {
 	public init(robot: MTRobot) {
 		self.robot = robot
 		super.init(image: UIImage(named: self.robot.robotIconName))
+		self.contentMode = .scaleAspectFit
 	}
 	
 	required public init?(coder aDecoder: NSCoder) {
@@ -62,6 +63,10 @@ open class MTMazeView: UIView {
 	public var maze: MTMaze?
 	public var isDummy = false
 	public var mazeBlocks: [[UIImageView]] = []
+	public var mazeSolverBlocks: [[UIImageView]] = []
+	
+	public var startPointView: UIView?
+	public var endPointView: UIView?
 	
 	
 	public override init(frame: CGRect) {
@@ -101,8 +106,23 @@ open class MTMazeView: UIView {
 	}
 	
 	public func oneTick() {
+		
 		for robotView in robotViews {
 			if robotView.robot.status == .running {
+				
+				self.mazeBlocks[robotView.robot.robotPos.y][robotView.robot.robotPos.x].tintColor = .green
+				for d in MTDirection.allDirections {
+					let p = robotView.robot.robotPos + d.diff
+					if maze!.size.inBounds(tile: p) {
+						if self.mazeBlocks[p.y][p.x].tintColor != .green {
+							self.mazeBlocks[p.y][p.x].tintColor = .yellow
+						}
+					}
+				}
+				
+				if let plan = robotView.robot.plan, let pos = robotView.robot.planPos, !isDummy {
+					showDirections(plan, from: pos)
+				}
 				robotView.robot.robotTick()
 				self.update(robotView)
 			}
@@ -116,7 +136,7 @@ open class MTMazeView: UIView {
 	}
 	
 	public func update(_ robotView: MTRobotView) {
-		UIView.animate(withDuration: 0.1, delay: 0.0, options: [.curveLinear], animations: {
+		UIView.animate(withDuration: 0.2, delay: 0.0, options: [.curveLinear], animations: {
 			robotView.frame = self.getPosition(robotView.robot.robotPos.x, robotView.robot.robotPos.y)
 			
 			if robotView.robot.canRotate {
@@ -140,9 +160,53 @@ open class MTMazeView: UIView {
 		updateStats()
 	}
 	
+	public func showDirections(_ directions: MTDirections, from position: MTTilePosition) {
+		
+		for j in mazeSolverBlocks {
+			for i in j {
+				i.image = nil
+			}
+		}
+		
+		var pos = position;
+//		print("From pos: \(position), Update directions: \(directions)")
+		for i in directions {
+			
+			
+			if self.maze!.size.inBounds(tile: pos) {
+				if self.mazeSolverBlocks[pos.y][pos.x].image != nil {
+					print("Loop back detected: \(pos), \(i)")
+				}
+//				print("Pos: \(pos), dir:  \(i)")
+				
+				self.mazeSolverBlocks[pos.y][pos.x].image = UIImage(named: "DIR_\(i.char)", in: Bundle(identifier: "com.mekatrotekno.MTMazeKit"), compatibleWith: nil)
+				
+				if let maze = self.maze, !maze.directions(at: pos).contains(i) {
+					self.mazeSolverBlocks[pos.y][pos.x].tintColor = .red
+				}
+				
+				
+			}
+			
+			pos += i.diff
+		}
+		
+	}
+	
 	public func setMaze(to maze: MTMaze) {
 		self.maze = maze
 		
+		if startPointView == nil {
+			startPointView = UIView()
+			startPointView?.backgroundColor = #colorLiteral(red: 0, green: 0.9319480062, blue: 0.1507667601, alpha: 0.2838633363)
+			self.addSubview(startPointView!)
+		}
+		
+		if endPointView == nil {
+			endPointView = UIView()
+			endPointView?.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 0.2838633363)
+			self.addSubview(endPointView!)
+		}
 		
 		for m in mazeBlocks {
 			for n in m {
@@ -159,7 +223,7 @@ open class MTMazeView: UIView {
 				
 				if let image = UIImage(named: d, in: Bundle(identifier: "com.mekatrotekno.MTMazeKit"), compatibleWith: nil) {
 					let imageView = UIImageView(image: image);
-					
+					imageView.tintColor = .red
 					self.addSubview(imageView);
 					//imageView.frame = getPosition(i, j);
 					rows.append(imageView)
@@ -167,6 +231,32 @@ open class MTMazeView: UIView {
 			}
 			self.mazeBlocks.append(rows)
 		}
+		
+		for m in mazeSolverBlocks {
+			for n in m {
+				n.removeFromSuperview()
+			}
+		}
+		
+		mazeSolverBlocks.removeAll()
+		
+		for j in 0..<maze.size.y {
+			var rows: [UIImageView] = []
+			
+			for i in 0..<maze.size.x {
+				
+				let imageView = UIImageView();
+				
+				self.addSubview(imageView);
+				//imageView.frame = getPosition(i, j);
+				rows.append(imageView)
+			}
+			self.mazeSolverBlocks.append(rows)
+		}
+		
+		
+		
+		
 		if !isDummy {
 			for robot in robots {
 				robot.robotPos = maze.startPoint
@@ -226,11 +316,32 @@ open class MTMazeView: UIView {
 			}
 		}
 		
+		for (y,m) in mazeSolverBlocks.enumerated() {
+			for (x,n) in m.enumerated() {
+				n.frame = getPosition(x, y)
+			}
+		}
+		
 		for r in robotViews {
 			if r.robot.status != .running {
 				r.frame = getPosition(r.robot.robotPos.x, r.robot.robotPos.y);
 			}
 		}
+		
+		if let endPointView = endPointView, let startPointView = startPointView, let maze = self.maze {
+			endPointView.frame = getPosition(at: maze.endPoint)
+			startPointView.frame = getPosition(at: maze.startPoint)
+		}
+	}
+	
+	private func getPosition(at: MTTilePosition) -> CGRect {
+		guard let maze = self.maze else {
+			return .zero
+		}
+		
+		let cellWidth = self.frame.width / maze.size.cgSize.width;
+		let cellHeight = self.frame.height / maze.size.cgSize.height;
+		return CGRect(x: (CGFloat(at.x) * cellWidth), y: (CGFloat(at.y) * cellHeight), width: cellWidth, height: cellHeight);
 	}
 	
 	private func getPosition(_ xpos: Int, _ ypos: Int, size: CGFloat = -1) -> CGRect {

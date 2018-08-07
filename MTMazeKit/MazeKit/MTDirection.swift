@@ -28,7 +28,18 @@ import Foundation
 
 public typealias MTDirections = [MTDirection]
 
-public enum MTTurnDirection {
+public enum MTTurnDirection: CustomDebugStringConvertible {
+	public var debugDescription: String {
+		switch self {
+		case .left:
+			return "left"
+		case .right:
+			return "right"
+		case .back:
+			return "back"
+		}
+	}
+	
 	case left
 	case right
 	case back
@@ -112,16 +123,16 @@ extension Array where Element == MTDirection {
 		}
 	}
 	
-	public var diff:(x: Int, y: Int) {
+	public var diff: MTTilePosition {
 		switch self {
 		case .up:
-			return (x: 0, y: -1)
+			return MTTilePosition(x: 0, y: -1)
 		case .down:
-			return (0, 1)
+			return MTTilePosition(x: 0, y: 1)
 		case .right:
-			return (1, 0)
+			return MTTilePosition(x: 1, y: 0)
 		case .left:
-			return (-1, 0)
+			return MTTilePosition(x: -1, y: 0)
 		}
 	}
 	

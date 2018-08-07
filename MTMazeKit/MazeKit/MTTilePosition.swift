@@ -30,7 +30,12 @@ import Foundation
 import GameKit
 
 /// Tile Position class for maze
-public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
+public struct MTTilePosition: Codable, Equatable, Hashable, CustomStringConvertible, CustomDebugStringConvertible {
+	
+	public var debugDescription: String {
+		return "(x: \(x), y: \(y))"
+	}
+	
 	public var description: String {
 		return "(x: \(x), y: \(y))"
 	}
@@ -53,7 +58,22 @@ public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
 		return MTTilePosition(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 	}
 	
+	public static func +(lhs: MTTilePosition, rhs: MTTilePosition) -> MTTilePosition {
+		return MTTilePosition(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+	}
+	
+	public static func *(lhs: MTTilePosition, rhs: Int) -> MTTilePosition {
+		return MTTilePosition(x: lhs.x * rhs, y: lhs.y * rhs)
+	}
+	
+	public static func /(lhs: MTTilePosition, rhs: Int) -> MTTilePosition {
+		return MTTilePosition(x: lhs.x / rhs, y: lhs.y / rhs)
+	}
+	
 	public static func +=(lhs: inout MTTilePosition, rhs: (x: Int, y: Int)) {
+		lhs = lhs + rhs
+	}
+	public static func +=(lhs: inout MTTilePosition, rhs: MTTilePosition) {
 		lhs = lhs + rhs
 	}
 	
@@ -83,4 +103,9 @@ public struct MTTilePosition: Codable, Equatable, CustomStringConvertible {
 	public var int2: vector_int2 {
 		return vector_int2(Int32(x), Int32(y))
 	}
+	
+	public var hashValue: Int {
+		return self.x + self.y << 16
+	}
 }
+

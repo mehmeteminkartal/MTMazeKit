@@ -59,6 +59,9 @@ public extension Notification.Name {
 
 open class MTRobot: NSObject {
 	
+	public var plan: MTDirections?
+	public var planPos: MTTilePosition?
+	
 	public override init() {
 		super.init()
 	}
@@ -73,7 +76,7 @@ open class MTRobot: NSObject {
 	public var numberOfMoves = 0;
 	public var numberOfTurns = 0;
 	
-	public var score = 10000
+	public var score = 10000000000
 	
 	public var totalScore = 0
 	
@@ -81,7 +84,7 @@ open class MTRobot: NSObject {
 		self.status = .running
 		self.numberOfMoves = 0
 		self.numberOfTurns = 0
-		self.score = 10000
+		self.score = 10000000000
 	}
 	
 	open var canRotate: Bool {
@@ -95,7 +98,7 @@ open class MTRobot: NSObject {
 	public var robotPos: MTTilePosition = .init(x: 0, y: 0)
 	public var robotDirection: MTDirection = .down
 	
-	public weak var maze: MTMaze!
+	fileprivate weak var maze: MTMaze!
 	
 	open func mazeUpdated(to maze: MTMaze) {
 		self.maze = maze
@@ -112,7 +115,7 @@ open class MTRobot: NSObject {
 	private var mazeCache: [[Int]] = []
 	
 	
-	private func getCachedValue(for path: MTTilePosition) -> Int {
+	public func getCachedValue(for path: MTTilePosition) -> Int {
 		
 		if maze == nil {
 			return -1
@@ -155,11 +158,11 @@ open class MTRobot: NSObject {
 		
 		runAlgo();
 		
-		if(self.robotPos == MTTilePosition(x: self.maze.size.x - 1,y: self.maze.size.y - 1)) {
+		/*if(self.robotPos == maze.endPoint) {
 			self.status = .finished
 			
 			NotificationCenter.default.post(name: .MTMazeNewMazeNotification, object: nil)
-		}
+		}*/
 	}
 	
 	
@@ -172,6 +175,8 @@ open class MTRobot: NSObject {
 		numberOfTurns += 1
 		self.score -= 5
 		
+//		print("Turn \(direction)")
+		
 		self.robotDirection = self.robotDirection.turn(direction)
 		
 		let val = self.getCachedValue(for: self.robotPos)
@@ -179,13 +184,69 @@ open class MTRobot: NSObject {
 		
 	}
 	
-	func getDirections() -> MTDirections {
+	fileprivate func getDirections() -> MTDirections {
 		return self.maze.directions(at: self.robotPos);
+	}
+	
+	public var frontSensor: Int? {
+		var s = 0;
+		var position: MTTilePosition = self.robotPos
+		while self.maze.directions(at: position).contains(self.robotDirection) {
+			position = position.nextTile(at: self.robotDirection)
+			s += 1;
+			if s > 4 {
+				return nil
+			}
+		}
+		return s
+	}
+	
+	
+	public var leftSensor: Int? {
+		var s = 0;
+		let dir = robotDirection.turn(.left)
+		var position: MTTilePosition = self.robotPos
+		while self.maze.directions(at: position).contains(dir) {
+			position = position.nextTile(at: dir)
+			s += 1;
+			if s > 4 {
+				return nil
+			}
+		}
+		return s
+	}
+	
+	public var rightSensor: Int? {
+		var s = 0;
+		let dir = robotDirection.turn(.right)
+		var position: MTTilePosition = self.robotPos
+		while self.maze.directions(at: position).contains(dir) {
+			position = position.nextTile(at: dir)
+			s += 1;
+			if s > 4 {
+				return nil
+			}
+		}
+		return s
 	}
 	
 	var canGoForward: Bool {
 		if self.getDirections().contains(self.robotDirection) {
 			let np = self.robotPos.nextTile(at: self.robotDirection)
+			
+			if self.maze.size.inBounds(tile: np) {
+				return true
+			} else {
+				return false
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	var canGoBackward: Bool {
+		if self.getDirections().contains(self.robotDirection.opposite) {
+			let np = self.robotPos.nextTile(at: self.robotDirection.opposite)
 			
 			if self.maze.size.inBounds(tile: np) {
 				return true
@@ -211,9 +272,34 @@ open class MTRobot: NSObject {
 			
 			let val = self.getCachedValue(for: self.robotPos)
 			self.setCachedValue(for: self.robotPos, to: val + 1)
-			
+//			print("Move Forward")
 		} else {
-			print("illegal move!");
+			print("illegal move! Robot tried to go forwards");
+			self.status = .disqualified
+		}
+	}
+	
+	public var isFinished: Bool {
+		return self.robotPos == self.maze.endPoint
+	}
+	
+	public func backward() {
+		if score < 10 {
+			self.status = .exhausted
+			return
+		}
+		
+		self.numberOfMoves += 1
+		self.score -= 10
+		
+		if self.canGoBackward {
+			self.robotPos += self.robotDirection.opposite.diff
+			
+			let val = self.getCachedValue(for: self.robotPos)
+			self.setCachedValue(for: self.robotPos, to: val + 1)
+//			print("Move backwards")
+		} else {
+			print("illegal move! Robot tried to go backwards");
 			self.status = .disqualified
 		}
 	}

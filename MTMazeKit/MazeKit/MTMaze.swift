@@ -76,8 +76,17 @@ public class MTMaze: NSObject, Codable {
 			}
 		}
 		
-		startPoint = .zero
-		endPoint = size.tilePos - (x: 1, y: 1)
+		let x1 = Int(arc4random()) % size.x
+		let y1 = Int(arc4random()) % size.y
+		let x2 = Int(arc4random()) % size.x
+		let y2 = Int(arc4random()) % size.y
+		
+		self.startPoint = MTTilePosition(x: x1, y: y1)//.zero
+		self.endPoint = MTTilePosition(x: x2, y: y2) // size.tilePos - (x: 1, y: 1)
+		
+		
+				/*self.startPoint = .zero
+				self.endPoint = size.tilePos - (x: 1, y: 1)*/
 		
 		super.init()
 	}

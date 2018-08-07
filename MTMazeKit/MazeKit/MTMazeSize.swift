@@ -28,7 +28,39 @@
 import Foundation
 
 
-public struct MTMazeSize: Codable {
+public struct MTTilePositionIterator: IteratorProtocol {
+	let size: MTMazeSize
+	var times = 0
+	
+	public init(_ size: MTMazeSize) {
+		self.size = size
+	}
+	
+	mutating public func next() -> MTTilePosition? {
+		let nextNumber =  times
+		let tile = MTTilePosition(x: nextNumber % size.x, y: (nextNumber - (nextNumber % size.x)) / size.y)
+		guard nextNumber < size.x * size.y
+			else { return nil }
+		
+		times += 1
+		return tile
+	}
+}
+
+public struct MTMazeSize: Codable, Sequence, CustomDebugStringConvertible, CustomStringConvertible {
+	public var debugDescription: String {
+		return self.tilePos.debugDescription
+	}
+	
+	public var description: String {
+		return self.tilePos.description
+	}
+	
+	
+	public typealias Iterator = MTTilePositionIterator
+	public func makeIterator() -> MTMazeSize.Iterator {
+		return MTTilePositionIterator(self)
+	}
 	
 	public init(x: Int, y: Int) {
 		self.x = x
