@@ -240,10 +240,10 @@ open class MTMazeView: UIView {
 		
 		mazeSolverBlocks.removeAll()
 		
-		for j in 0..<maze.size.y {
+		for _ in 0..<maze.size.y {
 			var rows: [UIImageView] = []
 			
-			for i in 0..<maze.size.x {
+			for _ in 0..<maze.size.x {
 				
 				let imageView = UIImageView();
 				

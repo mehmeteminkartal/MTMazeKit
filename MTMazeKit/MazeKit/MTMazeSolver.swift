@@ -51,17 +51,7 @@ public class MTMazeSolver: NSObject {
 		
 		
 		recStart(from, 1, nil, to)
-		
-		
-		/*print("-------");
-		for pos in self.maze.size {
-			print("\(self.mazeMap[pos.x][pos.y])\t", separator: "", terminator: "")
-			if(pos.x == self.maze.size.x - 1) {
-				print("/")
-			}
-		}
-		print("*------*")*/
-		
+
 		
 		var steps: [MTDirection?] = .init(repeating: nil, count: maxSteps);
 
@@ -82,28 +72,22 @@ public class MTMazeSolver: NSObject {
 					lowest = min(self.mazeMap[newPos.x][newPos.y], lowest);
 				}
 			}
-			
-//			print("Lowest for pos \(pos) is \(lowest)")
-			
+
 			for dir in directions {
 				let newPos = pos + dir.diff;
 				if self.maze.size.inBounds(tile: newPos) && self.mazeMap[newPos.x][newPos.y] == lowest {
-//					print("Lowest at \(dir.opposite)")
-					
+
 					steps[i - 1] = dir.opposite
 					pos += dir.diff
 					
 					ssteps += 1;
 					if pos == to {
-//						print("Solved the maze!")
 						solved = true
 					}
 				}
 			}
 		}
-		
-//		print("Num steps: \(ssteps)");
-		
+
 		self.steps = [];
 		for s in steps {
 			if let a = s {
@@ -132,12 +116,12 @@ public class MTMazeSolver: NSObject {
 	var maxSteps = 0;
 	private func recStart(_ pos: MTTilePosition, _ val: Int, _ opposite: MTDirection?, _ to: MTTilePosition) {
 		// loopfill
-		var solved = false;
 		
 		var curVal = 1;
 		self.mazeMap[pos.x][pos.y] = val;
-		
-		while !solved {
+
+
+		for _ in 0...Int(pow(Double(self.maze.size.x * self.maze.size.y), 2)) {
 			
 			var filled = false;
 			for i in self.maze.size {
@@ -157,7 +141,7 @@ public class MTMazeSolver: NSObject {
 					
 					if i == to {
 						maxSteps = curVal
-						solved = true;
+						return
 					}
 				}
 				
